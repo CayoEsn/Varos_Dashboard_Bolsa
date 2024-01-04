@@ -7,8 +7,8 @@ import requests
 from bs4 import BeautifulSoup
 import yfinance as yf
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
-news_data = {}
+external_stylesheets = [dbc.themes.BOOTSTRAP, 'assets/style.css']
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 app.layout = dbc.Container(fluid=True, children=[
     dbc.Row([
@@ -22,24 +22,21 @@ app.layout = dbc.Container(fluid=True, children=[
                         {'label': 'CEAB3', 'value': 'CEAB3'},
                     ],
                     value='PETR4',
-                    style={
-                        'width': '60%',
-                        'margin': 'auto',
-                        'color': 'black',
-                    },
+                    className='dropdown-stocks'
                 ), html.Div(id='output-div')
             ]),
             dbc.Col([
-                dcc.Graph(id='grafico-candlestick'),
+                dcc.Graph(id='grafico-candlestick', style={'display': 'none'}),
             ]),
         ], width=6, style={'marginTop': '200px'}),
         dbc.Col([
-            html.H2('Notícias', className='text-center', style={'fontSize': '3rem'}),
+            html.H2('Notícias', className='text-center',
+                    style={'fontSize': 'calc(1.425rem + 2.1vw)'}),
 
             html.Div(id='noticias')
         ], width=6, style={'marginTop': '140px'}),
     ]),
-], style={'height': '100vh', 'backgroundColor': 'rgb(19, 21, 22)', 'width': '100%', 'color': '#fff'})
+], style={'height': '100vh', 'padding': '25px 25px 0px', 'backgroundColor': 'rgb(19, 21, 22)', 'width': '100%', 'color': 'white', 'fontFamily': 'Lato,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"'})
 
 
 @app.callback(
@@ -68,10 +65,10 @@ def update_output(selected_option):
                     div = html.Div([
                         dcc.Link([
                             html.H3(titulo, style={
-                                    'color': 'gray', 'font-size': '16px'}),
+                                    'color': 'gray', 'fontSize': '16px'}),
                             html.H5(subtitulo, style={
-                                    'color': 'white', 'font-size': '24px'})
-                        ], href=link, target='_blank', style={'text-decoration': 'none'})
+                                    'color': 'white', 'fontSize': '24px'})
+                        ], href=link, target='_blank', style={'textDecoration': 'none'})
                     ], style={'margin': '30px 0px'})
 
                     elementos_noticias.append(div)
@@ -84,6 +81,7 @@ def update_output(selected_option):
 
 @app.callback(
     Output('grafico-candlestick', 'figure'),
+    Output('grafico-candlestick', 'style'),
     [Input('dropdown', 'value')]
 )
 def grafico_candlestick(selected_option):
@@ -104,7 +102,7 @@ def grafico_candlestick(selected_option):
                 yaxis=dict(showgrid=False, dtick=2),
                 xaxis_rangeslider=dict(visible=False),
             )
-            return figura
+            return figura, ({'display': 'block'})
         else:
             return go.Figure()
     else:

@@ -1,0 +1,18 @@
+#dropdown {
+  width: 30%;
+  margin: auto;
+}
+
+.Select-control {
+  background-color: rgb(0, 0, 0) !important;
+  color: white;
+}
+
+.Select-menu-outer {
+  background-color: rgb(25, 25, 25);
+  color: white;
+}
+
+.Select-value-label {
+  color: #F2F4F8 !important;
+}
