@@ -65,9 +65,9 @@ def update_output(selected_option):
                     div = html.Div([
                         dcc.Link([
                             html.H3(titulo, style={
-                                    'color': 'gray', 'fontSize': '16px'}),
+                                    'color': '#B0B7BE', 'fontSize': '16px', 'fontWeight': '500'}),
                             html.H5(subtitulo, style={
-                                    'color': 'white', 'fontSize': '24px'})
+                                    'color': '#F2F4F8', 'fontSize': '24px', 'fontWeight': '700'})
                         ], href=link, target='_blank', style={'textDecoration': 'none'})
                     ], style={'margin': '30px 0px'})
 
